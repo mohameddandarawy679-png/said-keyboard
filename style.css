@@ -1,37 +1,35 @@
 *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#0a0a1a;color:#fff}
-.app{max-width:520px;margin:auto;min-height:100vh;padding:0 12px 12px}
-.hero{text-align:center;padding:22px 10px 16px;background:linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4);border-radius:0 0 28px 28px;margin:0 -12px 14px;box-shadow:0 10px 30px rgba(124,58,237,.4)}
-.logo{font-size:52px;background:#fff;width:78px;height:78px;line-height:78px;border-radius:22px;margin:auto;box-shadow:0 8px 20px rgba(0,0,0,.3)}
-.hero h1{font-size:28px;margin:12px 0 4px;letter-spacing:1px}
-.hero h1 span{color:#facc15}
-.hero p{margin:0;color:#e0e7ff;font-size:15px}
-.stars{margin:10px 0;font-size:14px;background:rgba(0,0,0,.25);display:inline-block;padding:6px 14px;border-radius:20px}
+body{margin:0;background:#120b00;color:#ffe9a8}
+.app{max-width:520px;margin:auto;min-height:100vh;padding:0 12px 12px;background:radial-gradient(circle at top,#2a1a00 0%,#120b00 60%)}
+.hero{text-align:center;padding:24px 10px 18px;background:linear-gradient(135deg,#3a2400,#8a5a00,#d4af37,#8a5a00,#3a2400);border:3px solid #ffd700;border-radius:0 0 30px 30px;margin:0 -12px 14px;box-shadow:0 10px 30px rgba(212,175,55,.5)}
+.logo{font-size:50px;background:#120b00;width:80px;height:80px;line-height:80px;border-radius:50%;margin:auto;border:3px solid #ffd700;box-shadow:0 0 20px #ffd700}
+.hero h1{font-size:30px;margin:12px 0 4px;letter-spacing:2px;color:#fff;text-shadow:2px 2px 0 #000}
+.hero h1 span{color:#ffd700}
+.hero p{margin:0;color:#ffe9a8;font-size:15px;font-weight:bold}
+.stars{margin:10px 0;font-size:14px;background:#000;color:#ffd700;display:inline-block;padding:6px 14px;border-radius:20px;border:1px solid #ffd700}
 .badges{display:flex;justify-content:center;gap:8px}
-.badges span{background:#fff;color:#111;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.badges span{background:#ffd700;color:#000;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:900}
 .features{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.feat{background:#1e1e35;border:1px solid #33335a;padding:12px 6px;border-radius:16px;text-align:center}
-.feat b{display:block;font-size:14px}
-.feat span{font-size:12px;color:#a5b4fc}
-#editor{width:100%;height:130px;background:#14142b;border:2px solid #2e2e55;border-radius:16px;color:#fff;padding:12px;font-size:18px;outline:none;resize:none}
-#editor:focus{border-color:#7c3aed}
+.feat{background:#1f1400;border:2px solid #8a5a00;padding:12px 6px;border-radius:16px;text-align:center}
+.feat b{display:block;font-size:14px;color:#ffd700}
+.feat span{font-size:12px;color:#ffdf8a}
+#editor{width:100%;height:140px;background:#fff8dc;border:3px solid #d4af37;border-radius:16px;color:#000;padding:12px;font-size:18px;outline:none;resize:none;direction:ltr;text-align:left;unicode-bidi:plaintext}
 .toolbar{display:flex;gap:6px;margin:10px 0}
-.toolbar button{flex:1;padding:11px;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
-#copyBtn{background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff}#pasteBtn{background:#0ea5e9;color:#fff}#clearBtn{background:#ef4444;color:#fff}#runBtn{background:#f59e0b}
-#preview{background:#fff;color:#000;border-radius:12px;padding:10px;display:none;min-height:60px;margin-bottom:10px}
-.keyboard{background:#1a1a2e;border:1px solid #2e2e55;border-radius:22px;padding:12px}
+.toolbar button{flex:1;padding:11px;border:2px solid #ffd700;border-radius:12px;font-weight:900;cursor:pointer}
+#copyBtn{background:#1a5d1a;color:#fff}#pasteBtn{background:#0a4a6e;color:#fff}#clearBtn{background:#8b0000;color:#fff}#runBtn{background:#ffd700;color:#000}
+#preview{background:#fff8dc;color:#000;border-radius:12px;padding:10px;display:none;min-height:60px;margin-bottom:10px;direction:ltr;text-align:left;border:2px solid #d4af37}
+.keyboard{background:#1a1000;border:3px solid #d4af37;border-radius:22px;padding:12px;box-shadow:0 0 20px rgba(212,175,55,.3)}
 .kb-tabs{display:flex;gap:5px;margin-bottom:10px;overflow-x:auto}
-.kb-tab{flex:1;white-space:nowrap;padding:11px 8px;border:none;border-radius:12px;background:#2a2a45;color:#fff;font-weight:bold}
-.kb-tab.active{background:linear-gradient(90deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 4px 12px rgba(124,58,237,.5)}
+.kb-tab{flex:1;white-space:nowrap;padding:11px 8px;border:2px solid #8a5a00;border-radius:12px;background:#2a1a00;color:#ffe9a8;font-weight:bold}
+.kb-tab.active{background:linear-gradient(90deg,#ffd700,#b8860b);color:#000;border-color:#ffd700;box-shadow:0 4px 12px rgba(255,215,0,.6)}
 #kbArea{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;min-height:180px}
-.kb-btn{padding:15px 0;border:none;border-radius:14px;background:#2e2e55;color:#fff;font-size:18px;font-weight:bold;box-shadow:0 3px 0 #111}
-.kb-btn:active{background:#7c3aed;transform:translateY(2px);box-shadow:none}
-.kb-btn.small{font-size:13px;padding:12px 2px;background:#3b3b66}
-.kb-btn.learn-card{grid-column:span 5;text-align:right;padding:14px;background:#14142b;border:1px solid #33335a}
-.kb-btn.learn-card b{color:#facc15;display:block}
-.kb-btn.learn-card span{font-size:13px;color:#a5b4fc;font-weight:normal}
+.kb-btn{padding:15px 0;border:1px solid #8a5a00;border-radius:14px;background:#2e1f00;color:#ffe9a8;font-size:18px;font-weight:bold;box-shadow:0 3px 0 #000}
+.kb-btn:active{background:#d4af37;color:#000;transform:translateY(2px);box-shadow:none}
+.kb-btn.small{font-size:13px;padding:12px 2px;background:#3a2800}
+.kb-btn.learn-card{grid-column:span 5;text-align:center;padding:14px;background:#2a1a00;border:2px solid #ffd700}
+.kb-btn.learn-card b{color:#ffd700;display:block;font-size:18px}
 .kb-bottom{display:flex;gap:7px;margin-top:7px}
 .kb-bottom .kb-btn{flex:1}
-.kb-bottom .space{flex:3;background:#3b3b66}
-.kb-bottom .action{background:#ef4444}
-.footer{text-align:center;color:#64748b;font-size:12px}
+.kb-bottom .space{flex:3;background:#3a2800}
+.kb-bottom .action{background:#8b0000;color:#fff}
+.footer{text-align:center;color:#b8860b;font-size:12px;font-weight:bold}
