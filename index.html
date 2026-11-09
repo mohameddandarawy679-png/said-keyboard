@@ -3,28 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>كيبورد Said - عربي + برمجة</title>
+<title>Said Keyboard PRO - كيبورد المبرمجين</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="app">
-  <div class="topbar">
-    <b>⌨️ Said Keyboard</b>
-    <span id="modeLabel">عربي</span>
+  <div class="hero">
+    <div class="logo">⌨️</div>
+    <h1>SAID <span>KEYBOARD</span></h1>
+    <p>أول كيبورد عربي لتعليم البرمجة</p>
+    <div class="stars">⭐⭐⭐⭐⭐ <b>4.9 - 10K تحميل</b></div>
+    <div class="badges"><span>🔥 الأكثر تحميلاً</span><span>✅ بدون إعلانات</span></div>
   </div>
 
-  <textarea id="editor" placeholder="اكتب هنا... دوس على أي زرار في الكيبورد اللي تحت"></textarea>
+  <div class="features">
+    <div class="feat"><b>🇪🇬 عربي كامل</b><span>تشكيل وأرقام</span></div>
+    <div class="feat"><b>💻 كود جاهز</b><span>HTML CSS JS</span></div>
+    <div class="feat"><b>🎓 تعلّم</b><span>دروس جواه</span></div>
+  </div>
+
+  <textarea id="editor" placeholder="✍️ اكتب هنا... جرب الكيبورد اللي تحت"></textarea>
   
   <div class="toolbar">
     <button id="copyBtn">📋 نسخ</button>
     <button id="pasteBtn">📥 لصق</button>
     <button id="clearBtn">🗑️ مسح</button>
-    <button id="runBtn">▶ تشغيل الكود</button>
+    <button id="runBtn">▶ تشغيل</button>
   </div>
-
   <div id="preview"></div>
 
-  <!-- الكيبورد زي المتجر -->
   <div class="keyboard">
     <div class="kb-tabs">
       <button class="kb-tab active" data-kb="arabic">عربي 🇪🇬</button>
@@ -40,6 +47,7 @@
       <button class="kb-btn action" data-act="enter">⏎</button>
     </div>
   </div>
+  <p class="footer">Made with ❤️ by Said - النسخة الاحترافية</p>
 </div>
 <script src="script.js"></script>
 </body>
