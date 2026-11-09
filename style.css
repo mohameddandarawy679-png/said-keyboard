@@ -1,0 +1,47 @@
+body {
+  text-align: center;
+  background: #111827;
+  color: white;
+  font-family: sans-serif;
+}
+#screen {
+  width: 92%;
+  height: 90px;
+  font-size: 22px;
+  border-radius: 12px;
+  padding: 10px;
+}
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+}
+.keyboard button {
+  width: 52px;
+  height: 52px;
+  font-size: 22px;
+  border-radius: 10px;
+  border: none;
+  background: white;
+}
+.code-keyboard button {
+  background: #1e293b;
+  color: #38bdf8;
+  border: 1px solid #38bdf8;
+}
+.controls button, .preview-btn {
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+#preview {
+  background: white;
+  color: black;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 15px;
+  min-height: 80px;
+}

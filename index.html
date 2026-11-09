@@ -1,0 +1,50 @@
+<h1>كيبورد المبرمج 📱</h1>
+
+<textarea id="screen" placeholder="اكتب هنا..."></textarea>
+
+<div class="controls">
+  <button onclick="copyText()">نسخ 📋</button>
+  <button onclick="deleteLetter()">مسح ⬅</button>
+  <button onclick="clearAll()">مسح الكل</button>
+</div>
+
+<h3>كيبورد عربي</h3>
+<div class="keyboard">
+  <button onclick="typeLetter('ا')">ا</button>
+  <button onclick="typeLetter('ب')">ب</button>
+  <button onclick="typeLetter('ت')">ت</button>
+  <button onclick="typeLetter('ث')">ث</button>
+  <button onclick="typeLetter('ج')">ج</button>
+  <button onclick="typeLetter('ح')">ح</button>
+  <button onclick="typeLetter('خ')">خ</button>
+  <button onclick="typeLetter('د')">د</button>
+  <button onclick="typeLetter('م')">م</button>
+  <button onclick="typeLetter('ن')">ن</button>
+  <button onclick="typeLetter('س')">س</button>
+  <button onclick="typeLetter('ل')">ل</button>
+  <button onclick="typeLetter(' ')">مسافة</button>
+</div>
+
+<h3>كيبورد الكود 💻</h3>
+<div class="keyboard code-keyboard">
+  <button onclick="typeLetter('<')">&lt;</button>
+  <button onclick="typeLetter('>')">&gt;</button>
+  <button onclick="typeLetter('/')">/</button>
+  <button onclick="typeLetter('=')">=</button>
+  <button onclick="typeLetter(';')">;</button>
+  <button onclick="typeLetter('{')">{</button>
+  <button onclick="typeLetter('}')">}</button>
+  <button onclick="typeLetter('(')">(</button>
+  <button onclick="typeLetter(')')">)</button>
+  <button onclick="typeLetter('&quot;')">"</button>
+</div>
+
+<h3>قوالب جاهزة ⚡</h3>
+<div class="controls">
+  <button onclick="addDiv()">+ div</button>
+  <button onclick="addH1()">+ h1</button>
+  <button onclick="addP()">+ p</button>
+</div>
+
+<button onclick="showPreview()" class="preview-btn">شوف النتيجة 👀</button>
+<div id="preview"></div>
