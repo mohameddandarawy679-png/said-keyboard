@@ -1,83 +1,83 @@
-window.onload = function(){
-var editor = document.getElementById('editor');
-var kbArea = document.getElementById('kbArea');
-var preview = document.getElementById('preview');
-var current = 'arabic';
+const editor = document.getElementById('editor');
+const kbArea = document.getElementById('kbArea');
+const preview = document.getElementById('preview');
 
-var arabic = ['ض','ص','ث','ق','ف','غ','ع','ه','خ','ح','ج','د','ش','س','ي','ب','ل','ا','ت','ن','م','ك','ط','ظ','ز','و','ة','ئ','ء','ؤ','ر'];
-var html = ['<div>','</div>','<h1>','</h1>','<p>','</p>','<button>','</button>','<img>','<a>','</a>','<br>','<ul>','<li>','<input>'];
-var css = ['color:','background:','font-size:','padding:','margin:','border:','border-radius:','display:flex;','width:','height:','{','}',';'];
-var js = ['function','let ','const ','if (','else','return','console.log()','alert()','document.','{','}',';'];
-
-function insert(t){
-  editor.value = editor.value + t;
+function insert(text){
+  const s = editor.selectionStart ?? editor.value.length;
+  const e = editor.selectionEnd ?? editor.value.length;
+  editor.value = editor.value.slice(0,s) + text + editor.value.slice(e);
   editor.focus();
+  const pos = s + text.length;
+  editor.setSelectionRange(pos,pos);
 }
 
-function render(){
-  kbArea.innerHTML = '';
-  var list = arabic;
-  if(current=='html') list = html;
-  if(current=='css') list = css;
-  if(current=='js') list = js;
+const KEYS = {
+  arabic: ['ا','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي','ة','أ','إ','آ','ؤ','ئ','َ','ُ','ِ','ّ','ً','ٌ','ٍ','٠','١','٢','٣','٤','٥','٦','٧','٨','٩','!','؟','،','؛','.'],
+  html: ['<h1>','</h1>','<p>','</p>','<button>','</button>','<div>','</div>','<img>','<a>','</a>','<br>','<b>','</b>','<input>','class="','id="','src="','href="','"','<','>','/'],
+  css: ['color: ','background: ','padding: ','margin: ','border: ','border-radius: ','font-size: ','text-align: ','display: ','red','blue','green','white','black','gold','center','px','%',';','{','}',' : '],
+  js: ['alert(','console.log(','function ','let ','const ','if (','else','for (','document.','getElementById','addEventListener','click','=>','{','}','(',')',';','=','+']
+};
 
-  if(current=='learn'){
-    var lessons = [
-      {t:'1 زر احمر', c:"<button style='background:red;color:white;padding:12px;border:none;border-radius:10px'>دوس عليا</button>"},
-      {t:'2 عنوان كبير', c:"<h1 style='text-align:center;color:purple'>اهلا بيك في موقعي</h1>"},
-      {t:'3 كارت منتج', c:"<div style='background:white;color:black;padding:15px;border-radius:15px;text-align:center'><h3>منتجي</h3><button style='background:green;color:white;padding:10px;border:none;border-radius:10px'>اشتري</button></div>"}
-    ];
-    for(var i=0;i<lessons.length;i++){
-      (function(l){
-        var b = document.createElement('button');
-        b.className = 'kb-btn learn-card';
-        b.innerHTML = '<b>'+l.t+'</b>';
-        b.onclick = function(){ insert(l.c); };
-        kbArea.appendChild(b);
-      })(lessons[i]);
-    }
+// الكود هنا مكتوب متقطع صح، عشان كده عمره ما هيتقطع
+const LEARN = [
+  {title:'1 زر احمر', desc:'دوس وشوف الزر بيشتغل ازاي', code:
+`<button
+  style="background:red;
+  color:white;
+  padding:12px;
+  border:none;
+  border-radius:10px;">
+  دوس عليا
+</button>`},
+  {title:'2 عنوان كبير', desc:'أول حاجة تتعلمها في HTML', code:
+`<h1
+  style="color:gold;
+  text-align:center;">
+  أهلا بيك يا بطل
+</h1>`},
+  {title:'3 صندوق ذهبي', desc:'شكل حلو تعملو بنفسك', code:
+`<div
+  style="background:gold;
+  padding:15px;
+  border-radius:15px;
+  text-align:center;">
+  أنا عملت ده بنفسي
+</div>`},
+  {title:'4 صورتك', desc:'حط صورة في موقعك', code:
+`<img
+  src="https://picsum.photos/300"
+  style="width:100%;
+  border-radius:15px;">`}
+];
+
+function render(tab){
+  document.querySelectorAll('.kb-tab').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  kbArea.innerHTML='';
+  if(tab==='learn'){
+    LEARN.forEach(l=>{
+      const d=document.createElement('button');
+      d.className='kb-btn learn-card';
+      d.innerHTML=`<b>${l.title}</b><span>${l.desc}</span>`;
+      d.onclick=()=>{ editor.value=l.code; preview.style.display='none'; editor.focus(); window.scrollTo({top:0,behavior:'smooth'}); };
+      kbArea.appendChild(d);
+    });
     return;
   }
-
-  for(var i=0;i<list.length;i++){
-    (function(txt){
-      var b = document.createElement('button');
-      b.className = 'kb-btn small';
-      b.textContent = txt;
-      b.onclick = function(){ insert(txt); };
-      kbArea.appendChild(b);
-    })(list[i]);
-  }
+  KEYS[tab].forEach(k=>{
+    const b=document.createElement('button');
+    b.className='kb-btn'+(k.length>2?' small':'');
+    b.textContent=k;
+    b.onclick=()=>insert(k);
+    kbArea.appendChild(b);
+  });
 }
 
-var tabs = document.querySelectorAll('.kb-tab');
-for(var i=0;i<tabs.length;i++){
-  (function(tab){
-    tab.onclick = function(){
-      for(var j=0;j<tabs.length;j++) tabs[j].classList.remove('active');
-      tab.classList.add('active');
-      current = tab.getAttribute('data-kb');
-      render();
-    };
-  })(tabs[i]);
-}
+document.querySelectorAll('.kb-tab').forEach(b=>b.onclick=()=>render(b.dataset.tab));
+document.querySelectorAll('.kb-bottom .kb-btn[data-key]').forEach(b=>b.onclick=()=>insert(b.dataset.key));
+document.getElementById('backBtn').onclick=()=>{ editor.value=editor.value.slice(0,-1); editor.focus(); };
+document.getElementById('copyBtn').onclick=async()=>{ try{ await navigator.clipboard.writeText(editor.value); alert('اتنسخ ✅'); }catch{ editor.select(); document.execCommand('copy'); } };
+document.getElementById('clearBtn').onclick=()=>{ editor.value=''; preview.style.display='none'; preview.innerHTML=''; };
+document.getElementById('pasteBtn').onclick=async()=>{ try{ editor.value += await navigator.clipboard.readText(); }catch{ alert('اسمح باللصق من المتصفح'); } };
+document.getElementById('runBtn').onclick=()=>{ preview.style.display='block'; preview.innerHTML=editor.value; };
 
-document.getElementById('copyBtn').onclick = function(){ navigator.clipboard.writeText(editor.value); alert('اتنسخ'); };
-document.getElementById('clearBtn').onclick = function(){ editor.value=''; preview.style.display='none'; };
-document.getElementById('pasteBtn').onclick = function(){ alert('دوس مطول في مربع الكتابة واعمل لصق'); };
-document.getElementById('runBtn').onclick = function(){ preview.style.display='block'; preview.innerHTML = editor.value; };
-
-var bottomBtns = document.querySelectorAll('.kb-bottom .kb-btn');
-for(var i=0;i<bottomBtns.length;i++){
-  (function(b){
-    b.onclick = function(){
-      var act = b.getAttribute('data-act');
-      if(act=='back') editor.value = editor.value.slice(0,-1);
-      if(act=='space') insert(' ');
-      if(act=='enter') insert('\n');
-    };
-  })(bottomBtns[i]);
-}
-
-render();
-};
+render('learn');
