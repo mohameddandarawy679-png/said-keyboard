@@ -13,7 +13,7 @@ body{margin:0;background:#120b00;color:#ffe9a8}
 .feat{background:#1f1400;border:2px solid #8a5a00;padding:12px 6px;border-radius:16px;text-align:center}
 .feat b{display:block;font-size:14px;color:#ffd700}
 .feat span{font-size:12px;color:#ffdf8a}
-#editor{width:100%;height:140px;background:#fff8dc;border:3px solid #d4af37;border-radius:16px;color:#000;padding:12px;font-size:18px;outline:none;resize:none;direction:ltr;text-align:left;unicode-bidi:plaintext}
+#editor{width:100%;height:140px;background:#fff8dc;border:3px solid #d4af37;border-radius:16px;color:#000;padding:12px;font-size:15px;outline:none;resize:none;direction:ltr;text-align:left;unicode-bidi:plaintext;white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word;line-height:1.6}
 .toolbar{display:flex;gap:6px;margin:10px 0}
 .toolbar button{flex:1;padding:11px;border:2px solid #ffd700;border-radius:12px;font-weight:900;cursor:pointer}
 #copyBtn{background:#1a5d1a;color:#fff}#pasteBtn{background:#0a4a6e;color:#fff}#clearBtn{background:#8b0000;color:#fff}#runBtn{background:#ffd700;color:#000}
