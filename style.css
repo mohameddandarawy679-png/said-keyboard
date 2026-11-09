@@ -1,72 +1,37 @@
-const editor = document.getElementById('editor');
-const kbArea = document.getElementById('kbArea');
-const modeLabel = document.getElementById('modeLabel');
-const preview = document.getElementById('preview');
-
-function insert(t){
-  const s=editor.selectionStart, e=editor.selectionEnd;
-  editor.value = editor.value.slice(0,s)+t+editor.value.slice(e);
-  editor.focus();
-  editor.selectionStart=editor.selectionEnd=s+t.length;
-}
-function render(keys){
-  kbArea.innerHTML='';
-  keys.forEach(k=>{
-    const b=document.createElement('button');
-    b.className='kb-btn '+(k.length>3?'small':'');
-    b.textContent=k;
-    b.onclick=()=>insert(k);
-    kbArea.appendChild(b);
-  });
-}
-const DATA={
-  arabic: "ض ص ث ق ف غ ع ه خ ح ج د ش س ي ب ل ا ت ن م ك ط ذ ء ؤ ر ى ة و ز ظ 1 2 3 4 5 0 ً ُ ِ ّ ؟ ! . ،".split(" "),
-  html: ["<div>","</div>","<h1>","</h1>","<p>","</p>","<button>","</button>","<img>","<a href=''>","<input>","<ul>","<li>","class=''","id=''","<section>","<footer>","<header>","<form>","<span>"],
-  css: ["color:","background:","display:flex;","margin:","padding:","border-radius:","font-size:","width:","height:","justify-content:center;","align-items:center;","gap:",".box{","}","@media","hover","#","."],
-  js: ["function","const","let","console.log()","if()","else","for()","addEventListener","document.querySelector","=>","return","alert()","onclick","true","false","[]","{}","()"],
-  learn: []
-};
-function renderLearn(){
-  kbArea.innerHTML='';
-  const lessons=[
-    ["الدرس 1: اعمل زرار","<button>دوس عليا</button>","بص على الكود، ده زرار حقيقي"],
-    ["الدرس 2: غيّر اللون","<h1 style='color:red'>انا احمر</h1>","جرب تغير red لـ blue"],
-    ["الدرس 3: صندوق","<div style='background:yellow;padding:20px'>انا صندوق</div>","ده div، أساس أي موقع"],
-    ["الدرس 4: تفاعل","<button onclick=\"alert('مبروك!')\">دوس</button>","دوس تشغيل وشوف هيحصل ايه"],
-  ];
-  lessons.forEach(([t,code,desc])=>{
-    const b=document.createElement('button');
-    b.className='kb-btn learn-card';
-    b.innerHTML=`<b>${t}</b><span>${desc}</span>`;
-    b.onclick=()=>{insert(code); alert('اتضاف الكود! دوس تشغيل ▶');};
-    kbArea.appendChild(b);
-  });
-}
-document.querySelectorAll('.kb-tab').forEach(tab=>{
-  tab.onclick=()=>{
-    document.querySelectorAll('.kb-tab').forEach(x=>x.classList.remove('active'));
-    tab.classList.add('active');
-    const k=tab.dataset.kb;
-    modeLabel.textContent=tab.textContent;
-    if(k==='learn') renderLearn(); else render(DATA[k]);
-  }
-});
-document.querySelectorAll('.kb-bottom .kb-btn').forEach(b=>{
-  b.onclick=()=>{
-    const a=b.dataset.act;
-    if(a==='back') editor.value=editor.value.slice(0,-1);
-    if(a==='space') insert(' ');
-    if(a==='enter') insert('\n');
-  }
-});
-document.getElementById('copyBtn').onclick=async()=>{
-  await navigator.clipboard.writeText(editor.value); alert('اتنسخ ✅');
-};
-document.getElementById('pasteBtn').onclick=async()=>{
-  const t=await navigator.clipboard.readText(); insert(t);
-};
-document.getElementById('clearBtn').onclick=()=>{editor.value=''; preview.style.display='none'};
-document.getElementById('runBtn').onclick=()=>{
-  preview.style.display='block'; preview.innerHTML=editor.value;
-};
-render(DATA.arabic);
+*{box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#0a0a1a;color:#fff}
+.app{max-width:520px;margin:auto;min-height:100vh;padding:0 12px 12px}
+.hero{text-align:center;padding:22px 10px 16px;background:linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4);border-radius:0 0 28px 28px;margin:0 -12px 14px;box-shadow:0 10px 30px rgba(124,58,237,.4)}
+.logo{font-size:52px;background:#fff;width:78px;height:78px;line-height:78px;border-radius:22px;margin:auto;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.hero h1{font-size:28px;margin:12px 0 4px;letter-spacing:1px}
+.hero h1 span{color:#facc15}
+.hero p{margin:0;color:#e0e7ff;font-size:15px}
+.stars{margin:10px 0;font-size:14px;background:rgba(0,0,0,.25);display:inline-block;padding:6px 14px;border-radius:20px}
+.badges{display:flex;justify-content:center;gap:8px}
+.badges span{background:#fff;color:#111;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.feat{background:#1e1e35;border:1px solid #33335a;padding:12px 6px;border-radius:16px;text-align:center}
+.feat b{display:block;font-size:14px}
+.feat span{font-size:12px;color:#a5b4fc}
+#editor{width:100%;height:130px;background:#14142b;border:2px solid #2e2e55;border-radius:16px;color:#fff;padding:12px;font-size:18px;outline:none;resize:none}
+#editor:focus{border-color:#7c3aed}
+.toolbar{display:flex;gap:6px;margin:10px 0}
+.toolbar button{flex:1;padding:11px;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
+#copyBtn{background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff}#pasteBtn{background:#0ea5e9;color:#fff}#clearBtn{background:#ef4444;color:#fff}#runBtn{background:#f59e0b}
+#preview{background:#fff;color:#000;border-radius:12px;padding:10px;display:none;min-height:60px;margin-bottom:10px}
+.keyboard{background:#1a1a2e;border:1px solid #2e2e55;border-radius:22px;padding:12px}
+.kb-tabs{display:flex;gap:5px;margin-bottom:10px;overflow-x:auto}
+.kb-tab{flex:1;white-space:nowrap;padding:11px 8px;border:none;border-radius:12px;background:#2a2a45;color:#fff;font-weight:bold}
+.kb-tab.active{background:linear-gradient(90deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 4px 12px rgba(124,58,237,.5)}
+#kbArea{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;min-height:180px}
+.kb-btn{padding:15px 0;border:none;border-radius:14px;background:#2e2e55;color:#fff;font-size:18px;font-weight:bold;box-shadow:0 3px 0 #111}
+.kb-btn:active{background:#7c3aed;transform:translateY(2px);box-shadow:none}
+.kb-btn.small{font-size:13px;padding:12px 2px;background:#3b3b66}
+.kb-btn.learn-card{grid-column:span 5;text-align:right;padding:14px;background:#14142b;border:1px solid #33335a}
+.kb-btn.learn-card b{color:#facc15;display:block}
+.kb-btn.learn-card span{font-size:13px;color:#a5b4fc;font-weight:normal}
+.kb-bottom{display:flex;gap:7px;margin-top:7px}
+.kb-bottom .kb-btn{flex:1}
+.kb-bottom .space{flex:3;background:#3b3b66}
+.kb-bottom .action{background:#ef4444}
+.footer{text-align:center;color:#64748b;font-size:12px}
