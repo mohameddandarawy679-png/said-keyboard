@@ -1,56 +1,66 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SAID KEYBOARD - أول كيبورد عربي لتعليم البرمجة</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="app">
-  <header class="hero">
-    <div class="logo">⌨️</div>
-    <h1>SAID <span>KEYBOARD</span></h1>
-    <p>أول كيبورد عربي لتعليم البرمجة</p>
-    <div class="stars">4.9 ★★★★★ <b>10K تحميل</b></div>
-    <div class="badges"><span>🔥 الأكثر تحميلاً</span><span>✅ بدون إعلانات</span></div>
-  </header>
+const editor = document.getElementById('editor');
+const preview = document.getElementById('preview');
+const kbArea = document.getElementById('kbArea');
+const tabs = document.querySelectorAll('.kb-tab');
 
-  <section class="features">
-    <div class="feat"><b>🎓 تعلّم</b><span>دروس جواه</span></div>
-    <div class="feat"><b>💻 كود جاهز</b><span>HTML CSS JS</span></div>
-    <div class="feat"><b>🇪🇬 عربي كامل</b><span>تشكيل وأرقام</span></div>
-  </section>
+const KEYBOARDS = {
+  learn: ["<h1>","</h1>","<p>","</p>","<div>","</div>","<button>","</button>","<br>","<b>","</b>","<h2>","</h2>"],
+  arabic: ["ض","ص","ث","ق","ف","غ","ع","ه","خ","ح","ج","د","ش","س","ي","ب","ل","ا","ت","ن","م","ك","ط","ئ","ء","ؤ","ر","لا","ى","ة","و","ز","ظ","1","2","3","4","5","6","7","8","9","0","؟","،"],
+  html: ["<html>","<head>","<body>","<div>","<p>","<h1>","<a>","<img>","<button>","<span>","class=","id=","</div>","</p>"],
+  css: ["color:","background:","font-size:","padding:","margin:","border:","{","}",";","#",".","px","%"],
+  js: ["let ","const ","function ","alert(","console.log(","document.","getElementById","=>","{","}","(",")",";","="]
+};
 
-  <textarea id="editor" spellcheck="false" placeholder="اكتب الكود هنا..."></textarea>
+function insertText(txt){
+  let s = editor.selectionStart;
+  let e = editor.selectionEnd;
+  editor.value = editor.value.slice(0,s) + txt + editor.value.slice(e);
+  editor.selectionStart = editor.selectionEnd = s + txt.length;
+  editor.focus();
+}
 
-  <div class="toolbar">
-    <button id="runBtn">▶ تشغيل</button>
-    <button id="clearBtn">🗑️ مسح</button>
-    <button id="pasteBtn">📋 لصق</button>
-    <button id="copyBtn">📄 نسخ</button>
-  </div>
+function renderKb(tab){
+  kbArea.innerHTML = '';
+  KEYBOARDS[tab].forEach(k=>{
+    let b = document.createElement('button');
+    b.className = 'kb-btn';
+    b.textContent = k;
+    b.onclick = ()=> insertText(k);
+    kbArea.appendChild(b);
+  });
+  tabs.forEach(t=> t.classList.toggle('active', t.dataset.tab===tab));
+}
 
-  <div id="preview"></div>
+tabs.forEach(t=> t.onclick = ()=> renderKb(t.dataset.tab));
+renderKb('learn');
 
-  <section class="keyboard">
-    <div class="kb-tabs">
-      <button class="kb-tab active" data-tab="learn">🎓 تعلّم</button>
-      <button class="kb-tab" data-tab="arabic">🇪🇬 عربي</button>
-      <button class="kb-tab" data-tab="html">HTML</button>
-      <button class="kb-tab" data-tab="css">CSS</button>
-      <button class="kb-tab" data-tab="js">JS</button>
-    </div>
-    <div id="kbArea"></div>
-    <div class="kb-bottom">
-      <button class="kb-btn space" data-key=" ">مسافة</button>
-      <button class="kb-btn" data-key="&#10;">⏎ سطر جديد</button>
-      <button class="kb-btn action" id="backBtn">⌫ مسح</button>
-    </div>
-  </section>
+// أزرار التول بار
+document.getElementById('runBtn').onclick = ()=>{
+  preview.innerHTML = editor.value;
+};
+document.getElementById('clearBtn').onclick = ()=>{
+  editor.value=''; preview.innerHTML=''; editor.focus();
+};
+document.getElementById('copyBtn').onclick = ()=>{
+  navigator.clipboard.writeText(editor.value);
+  alert('اتنسخ ✅');
+};
+document.getElementById('pasteBtn').onclick = async ()=>{
+  try{
+    let txt = await navigator.clipboard.readText();
+    insertText(txt);
+  }catch{ alert('اسمح للمتصفح باللصق'); }
+};
 
-  <p class="footer">صُنع بحب في مصر 🇪🇬 - SAID KEYBOARD</p>
-</div>
-<script src="script.js"></script>
-</body>
-</html>
+// أزرار تحت الكيبورد
+document.querySelectorAll('.kb-bottom .kb-btn[data-key]').forEach(b=>{
+  b.onclick = ()=> insertText(b.dataset.key);
+});
+document.getElementById('backBtn').onclick = ()=>{
+  let s = editor.selectionStart;
+  if(s>0){
+    editor.value = editor.value.slice(0,s-1) + editor.value.slice(editor.selectionEnd);
+    editor.selectionStart = editor.selectionEnd = s-1;
+  }
+  editor.focus();
+};
