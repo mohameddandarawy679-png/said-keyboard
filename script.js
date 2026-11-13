@@ -1,83 +1,67 @@
-const editor = document.getElementById('editor');
-const kbArea = document.getElementById('kbArea');
-const preview = document.getElementById('preview');
-
-function insert(text){
-  const s = editor.selectionStart ?? editor.value.length;
-  const e = editor.selectionEnd ?? editor.value.length;
-  editor.value = editor.value.slice(0,s) + text + editor.value.slice(e);
-  editor.focus();
-  const pos = s + text.length;
-  editor.setSelectionRange(pos,pos);
+// 100 كود من smsm1000 لـ smsm1099
+const CODES = [];
+for(let i = 0; i < 100; i++){
+  CODES.push("SMSM" + (1000 + i));
 }
 
-const KEYS = {
-  arabic: ['ا','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي','ة','أ','إ','آ','ؤ','ئ','َ','ُ','ِ','ّ','ً','ٌ','ٍ','٠','١','٢','٣','٤','٥','٦','٧','٨','٩','!','؟','،','؛','.'],
-  html: ['<h1>','</h1>','<p>','</p>','<button>','</button>','<div>','</div>','<img>','<a>','</a>','<br>','<b>','</b>','<input>','class="','id="','src="','href="','"','<','>','/'],
-  css: ['color: ','background: ','padding: ','margin: ','border: ','border-radius: ','font-size: ','text-align: ','display: ','red','blue','green','white','black','gold','center','px','%',';','{','}',' : '],
-  js: ['alert(','console.log(','function ','let ','const ','if (','else','for (','document.','getElementById','addEventListener','click','=>','{','}','(',')',';','=','+']
+function checkCode(){
+  let val = document.getElementById('codeInput').value.trim().toUpperCase();
+  if(CODES.includes(val)){
+    localStorage.setItem('said_unlocked','yes');
+    localStorage.setItem('said_code',val);
+    document.getElementById('lockScreen').style.display='none';
+    alert('اتفتح ✅ أهلاً بيك يا بطل');
+  } else {
+    document.getElementById('codeMsg').textContent='الكود غلط، كلم سعيد على واتساب 01098920188';
+  }
+}
+if(localStorage.getItem('said_unlocked')==='yes'){
+  window.addEventListener('load',()=>{ document.getElementById('lockScreen').style.display='none'; });
+}
+
+const editor = document.getElementById('editor');
+const preview = document.getElementById('preview');
+const kbArea = document.getElementById('kbArea');
+const tabs = document.querySelectorAll('.kb-tab');
+
+const KEYBOARDS = {
+  learn: ["<h1>","</h1>","<p>","</p>","<div>","</div>","<button>","</button>","<br>","<b>","</b>","<h2>","</h2>"],
+  arabic: ["ض","ص","ث","ق","ف","غ","ع","ه","خ","ح","ج","د","ش","س","ي","ب","ل","ا","ت","ن","م","ك","ط","ئ","ء","ؤ","ر","لا","ى","ة","و","ز","ظ","1","2","3","4","5","6","7","8","9","0","؟","،"],
+  html: ["<html>","<head>","<body>","<div>","<p>","<h1>","<a>","<img>","<button>","<span>","class=","id=","</div>","</p>"],
+  css: ["color:","background:","font-size:","padding:","margin:","border:","{","}",";","#",".","px","%"],
+  js: ["let ","const ","function ","alert(","console.log(","document.","getElementById","=>","{","}","(",")",";","="]
 };
 
-// الكود هنا مكتوب متقطع صح، عشان كده عمره ما هيتقطع
-const LEARN = [
-  {title:'1 زر احمر', desc:'دوس وشوف الزر بيشتغل ازاي', code:
-`<button
-  style="background:red;
-  color:white;
-  padding:12px;
-  border:none;
-  border-radius:10px;">
-  دوس عليا
-</button>`},
-  {title:'2 عنوان كبير', desc:'أول حاجة تتعلمها في HTML', code:
-`<h1
-  style="color:gold;
-  text-align:center;">
-  أهلا بيك يا بطل
-</h1>`},
-  {title:'3 صندوق ذهبي', desc:'شكل حلو تعملو بنفسك', code:
-`<div
-  style="background:gold;
-  padding:15px;
-  border-radius:15px;
-  text-align:center;">
-  أنا عملت ده بنفسي
-</div>`},
-  {title:'4 صورتك', desc:'حط صورة في موقعك', code:
-`<img
-  src="https://picsum.photos/300"
-  style="width:100%;
-  border-radius:15px;">`}
-];
-
-function render(tab){
-  document.querySelectorAll('.kb-tab').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
-  kbArea.innerHTML='';
-  if(tab==='learn'){
-    LEARN.forEach(l=>{
-      const d=document.createElement('button');
-      d.className='kb-btn learn-card';
-      d.innerHTML=`<b>${l.title}</b><span>${l.desc}</span>`;
-      d.onclick=()=>{ editor.value=l.code; preview.style.display='none'; editor.focus(); window.scrollTo({top:0,behavior:'smooth'}); };
-      kbArea.appendChild(d);
-    });
-    return;
-  }
-  KEYS[tab].forEach(k=>{
-    const b=document.createElement('button');
-    b.className='kb-btn'+(k.length>2?' small':'');
-    b.textContent=k;
-    b.onclick=()=>insert(k);
+function insertText(txt){
+  let s = editor.selectionStart;
+  let e = editor.selectionEnd;
+  editor.value = editor.value.slice(0,s) + txt + editor.value.slice(e);
+  editor.selectionStart = editor.selectionEnd = s + txt.length;
+  editor.focus();
+}
+function renderKb(tab){
+  kbArea.innerHTML = '';
+  KEYBOARDS[tab].forEach(k=>{
+    let b = document.createElement('button');
+    b.className = 'kb-btn';
+    b.textContent = k;
+    b.onclick = ()=> insertText(k);
     kbArea.appendChild(b);
   });
+  tabs.forEach(t=> t.classList.toggle('active', t.dataset.tab===tab));
 }
+tabs.forEach(t=> t.onclick = ()=> renderKb(t.dataset.tab));
+renderKb('learn');
 
-document.querySelectorAll('.kb-tab').forEach(b=>b.onclick=()=>render(b.dataset.tab));
-document.querySelectorAll('.kb-bottom .kb-btn[data-key]').forEach(b=>b.onclick=()=>insert(b.dataset.key));
-document.getElementById('backBtn').onclick=()=>{ editor.value=editor.value.slice(0,-1); editor.focus(); };
-document.getElementById('copyBtn').onclick=async()=>{ try{ await navigator.clipboard.writeText(editor.value); alert('اتنسخ ✅'); }catch{ editor.select(); document.execCommand('copy'); } };
-document.getElementById('clearBtn').onclick=()=>{ editor.value=''; preview.style.display='none'; preview.innerHTML=''; };
-document.getElementById('pasteBtn').onclick=async()=>{ try{ editor.value += await navigator.clipboard.readText(); }catch{ alert('اسمح باللصق من المتصفح'); } };
-document.getElementById('runBtn').onclick=()=>{ preview.style.display='block'; preview.innerHTML=editor.value; };
-
-render('learn');
+document.getElementById('runBtn').onclick = ()=>{ preview.innerHTML = editor.value; };
+document.getElementById('clearBtn').onclick = ()=>{ editor.value=''; preview.innerHTML=''; editor.focus(); };
+document.getElementById('copyBtn').onclick = ()=>{ navigator.clipboard.writeText(editor.value); alert('اتنسخ ✅'); };
+document.getElementById('pasteBtn').onclick = async ()=>{
+  try{ let txt = await navigator.clipboard.readText(); insertText(txt); }catch{ alert('اسمح للمتصفح باللصق'); }
+};
+document.querySelectorAll('.kb-bottom .kb-btn[data-key]').forEach(b=>{ b.onclick = ()=> insertText(b.dataset.key); });
+document.getElementById('backBtn').onclick = ()=>{
+  let s = editor.selectionStart;
+  if(s>0){ editor.value = editor.value.slice(0,s-1) + editor.value.slice(editor.selectionEnd); editor.selectionStart = editor.selectionEnd = s-1; }
+  editor.focus();
+};
