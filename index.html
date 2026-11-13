@@ -4,46 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>سعيد كيبورد</title>
-<style>
-  *{box-sizing:border-box;font-family:system-ui}
-  body{background:#0F172A;color:#fff;margin:0;padding:12px;text-align:center}
-  h1{font-size:22px;margin:10px 0}
-  h1 span{color:#F59E0B}
-
-  /* شاشة القفل */
-  #lockScreen{position:fixed;inset:0;background:#0F172A;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-  #lockScreen input{padding:14px;border-radius:12px;border:none;width:100%;max-width:320px;text-align:center;font-size:18px;font-weight:bold}
-
-  /* ازرار التشغيل */
-  .toolbar button{padding:8px 12px;border-radius:10px;border:none;cursor:pointer;margin:3px;font-weight:bold;background:#334155;color:#fff;font-size:13px}
-
-  /* المحرر صغير */
-  #editor{width:100%;max-width:380px;height:110px;border-radius:12px;padding:10px;font-size:14px;direction:ltr;text-align:left;border:none}
-  #preview{background:#fff;color:#000;min-height:70px;border-radius:12px;padding:10px;margin-top:10px;max-width:380px;margin-inline:auto;text-align:left;font-size:14px}
-
-  /* ===== الكيبورد الصغير ===== */
-  .kb-tabs{display:flex;justify-content:center;gap:4px;max-width:380px;margin:10px auto 4px}
-  .kb-tab{padding:6px 10px;font-size:12px;border-radius:8px;background:#1E293B;color:#fff;border:none;cursor:pointer}
-  .kb-tab.active{background:#F59E0B;color:#000}
-
-  #kbArea{max-width:380px;margin:0 auto;display:grid;grid-template-columns:repeat(6, 1fr);gap:4px;padding:6px;background:#1E293B;border-radius:12px}
-  .kb-btn{padding:8px 2px;font-size:13px;border-radius:8px;background:#334155;color:#fff;border:none;cursor:pointer;min-height:36px}
-
-  .kb-bottom{max-width:380px;margin:6px auto;display:grid;grid-template-columns:repeat(4, 1fr);gap:4px}
-  .kb-bottom .kb-btn{background:#0F172A;border:1px solid #334155;font-size:12px}
-
-  .footer{opacity:.6;font-size:13px;margin-top:16px}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="lockScreen">
   <h2>🔒 سعيد كيبورد مقفول</h2>
   <p>دخل كود التفعيل</p>
-  <input id="codeInput" placeholder="smsm1000">
-  <button onclick="checkCode()" style="margin-top:12px;padding:14px 30px;background:#F59E0B;border:none;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;width:100%;max-width:320px;">تفعيل ✅</button>
-  <p id="codeMsg" style="margin-top:12px;color:#F87171;min-height:20px;"></p>
-  <p style="margin-top:16px;font-size:14px;opacity:0.8;line-height:1.6;">معكش كود؟<br>كلم سعيد واتساب: 01098920188</p>
+  <input id="codeInput" type="password" placeholder="">
+  <button onclick="checkCode()">تفعيل ✅</button>
+  <p id="codeMsg"></p>
+  <p class="contact">معكش كود؟<br>كلم سعيد واتساب: 01098920188</p>
 </div>
 
 <h1>⌨️ سعيد <span>كيبورد</span></h1>
@@ -52,4 +23,31 @@
   <button id="runBtn">▶ تشغيل</button>
   <button id="clearBtn">🗑 مسح</button>
   <button id="copyBtn">📋 نسخ</button>
-  <button id
+  <button id="pasteBtn">📥 لصق</button>
+</div>
+
+<textarea id="editor" placeholder="<h1>اكتب كودك هنا...</h1>"></textarea>
+<div id="preview">النتيجة هتظهر هنا...</div>
+
+<div class="kb-tabs">
+  <button class="kb-tab active" data-tab="learn">تعلم</button>
+  <button class="kb-tab" data-tab="arabic">عربي</button>
+  <button class="kb-tab" data-tab="html">HTML</button>
+  <button class="kb-tab" data-tab="css">CSS</button>
+  <button class="kb-tab" data-tab="js">JS</button>
+</div>
+
+<div id="kbArea"></div>
+
+<div class="kb-bottom">
+  <button class="kb-btn" data-key=" ">مسافة</button>
+  <button class="kb-btn" data-key="&#10;">سطر جديد ⏎</button>
+  <button class="kb-btn" data-key="&quot;">&quot;</button>
+  <button id="backBtn" class="kb-btn">⌫ مسح</button>
+</div>
+
+<p class="footer">Made by Said - سعيد كيبورد © 2026</p>
+
+<script src="script.js"></script>
+</body>
+</html>
