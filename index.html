@@ -3,39 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سعيد كيبورد - Said Keyboard</title>
+<title>سعيد كيبورد</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
-body{background:#111827;color:white;padding:12px;padding-bottom:20px}
-h1{font-size:22px;text-align:center;margin:8px 0}
-h1 span{color:#F59E0B}
-.toolbar{display:flex;gap:8px;justify-content:center;margin:10px 0;flex-wrap:wrap}
-.toolbar button{background:#1F2937;color:white;border:1px solid #374151;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:bold}
-.toolbar button:first-child{background:#F59E0B;color:#111827;border:none}
-#editor{width:100%;height:140px;background:#1F2937;color:#F9FAFB;border:1px solid #374151;border-radius:12px;padding:12px;font-size:16px;direction:ltr;text-align:left;resize:none;outline:none}
-#preview{background:white;color:#111827;min-height:90px;border-radius:12px;padding:12px;margin-top:10px;overflow:auto}
-.kb-tabs{display:flex;gap:8px;margin:14px 0;overflow:auto;padding-bottom:4px}
-.kb-tab{background:#1F2937;border:1px solid #374151;color:white;padding:9px 16px;border-radius:20px;white-space:nowrap;cursor:pointer}
-.kb-tab.active{background:#F59E0B;color:#111827;border-color:#F59E0B;font-weight:bold}
-#kbArea{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.kb-btn{background:#1F2937;border:1px solid #374151;color:white;padding:14px 4px;border-radius:10px;font-size:15px;cursor:pointer;direction:ltr}
-.kb-btn:active{background:#F59E0B;color:#111827}
-.kb-bottom{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
-.kb-bottom .kb-btn{background:#374151}
-.footer{text-align:center;opacity:0.6;font-size:13px;margin-top:16px}
+  *{box-sizing:border-box;font-family:system-ui}
+  body{background:#0F172A;color:#fff;margin:0;padding:12px;text-align:center}
+  h1{font-size:22px;margin:10px 0}
+  h1 span{color:#F59E0B}
+
+  /* شاشة القفل */
+  #lockScreen{position:fixed;inset:0;background:#0F172A;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+  #lockScreen input{padding:14px;border-radius:12px;border:none;width:100%;max-width:320px;text-align:center;font-size:18px;font-weight:bold}
+
+  /* ازرار التشغيل */
+  .toolbar button{padding:8px 12px;border-radius:10px;border:none;cursor:pointer;margin:3px;font-weight:bold;background:#334155;color:#fff;font-size:13px}
+
+  /* المحرر صغير */
+  #editor{width:100%;max-width:380px;height:110px;border-radius:12px;padding:10px;font-size:14px;direction:ltr;text-align:left;border:none}
+  #preview{background:#fff;color:#000;min-height:70px;border-radius:12px;padding:10px;margin-top:10px;max-width:380px;margin-inline:auto;text-align:left;font-size:14px}
+
+  /* ===== الكيبورد الصغير ===== */
+  .kb-tabs{display:flex;justify-content:center;gap:4px;max-width:380px;margin:10px auto 4px}
+  .kb-tab{padding:6px 10px;font-size:12px;border-radius:8px;background:#1E293B;color:#fff;border:none;cursor:pointer}
+  .kb-tab.active{background:#F59E0B;color:#000}
+
+  #kbArea{max-width:380px;margin:0 auto;display:grid;grid-template-columns:repeat(6, 1fr);gap:4px;padding:6px;background:#1E293B;border-radius:12px}
+  .kb-btn{padding:8px 2px;font-size:13px;border-radius:8px;background:#334155;color:#fff;border:none;cursor:pointer;min-height:36px}
+
+  .kb-bottom{max-width:380px;margin:6px auto;display:grid;grid-template-columns:repeat(4, 1fr);gap:4px}
+  .kb-bottom .kb-btn{background:#0F172A;border:1px solid #334155;font-size:12px}
+
+  .footer{opacity:.6;font-size:13px;margin-top:16px}
 </style>
 </head>
 <body>
 
-<!-- قفل التفعيل -->
-<div id="lockScreen" style="position:fixed;inset:0;background:#111827;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;color:white;">
-  <div style="font-size:50px;">🔒</div>
-  <h1 style="font-size:28px;margin:10px 0;">سعيد كيبورد</h1>
-  <p style="opacity:0.8;margin-bottom:20px;line-height:1.6;">اتعلم برمجة الاردوينو و HTML من موبايلك<br>التطبيق مقفول، دخل كود التفعيل</p>
-  <input id="codeInput" placeholder="دخل الكود هنا...0" style="padding:14px;width:100%;max-width:320px;border-radius:12px;border:none;text-align:center;font-size:17px;font-weight:bold;outline:none;">
+<div id="lockScreen">
+  <h2>🔒 سعيد كيبورد مقفول</h2>
+  <p>دخل كود التفعيل</p>
+  <input id="codeInput" placeholder="smsm1000">
   <button onclick="checkCode()" style="margin-top:12px;padding:14px 30px;background:#F59E0B;border:none;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;width:100%;max-width:320px;">تفعيل ✅</button>
   <p id="codeMsg" style="margin-top:12px;color:#F87171;min-height:20px;"></p>
-  <p style="margin-top:16px;font-size:14px;opacity:0.8;line-height:1.6;">معكش كود؟<br>كلم سعيد واتساب: 01098920188<br>السعر: 100 جنيه - أو 5$ للأجانب</p>
+  <p style="margin-top:16px;font-size:14px;opacity:0.8;line-height:1.6;">معكش كود؟<br>كلم سعيد واتساب: 01098920188</p>
 </div>
 
 <h1>⌨️ سعيد <span>كيبورد</span></h1>
@@ -44,98 +52,4 @@ h1 span{color:#F59E0B}
   <button id="runBtn">▶ تشغيل</button>
   <button id="clearBtn">🗑 مسح</button>
   <button id="copyBtn">📋 نسخ</button>
-  <button id="pasteBtn">📥 لصق</button>
-</div>
-
-<textarea id="editor" placeholder="<h1>اكتب كودك هنا...</h1>"></textarea>
-
-<div id="preview">النتيجة هتظهر هنا...</div>
-
-<div class="kb-tabs">
-  <button class="kb-tab active" data-tab="learn">تعلم</button>
-  <button class="kb-tab" data-tab="arabic">عربي</button>
-  <button class="kb-tab" data-tab="html">HTML</button>
-  <button class="kb-tab" data-tab="css">CSS</button>
-  <button class="kb-tab" data-tab="js">JS</button>
-</div>
-
-<div id="kbArea"></div>
-
-<div class="kb-bottom">
-  <button class="kb-btn" data-key=" ">مسافة</button>
-  <button class="kb-btn" data-key="&#10;">سطر جديد ⏎</button>
-  <button class="kb-btn" data-key="&quot;">&quot;</button>
-  <button id="backBtn" class="kb-btn">⌫ مسح</button>
-</div>
-
-<p class="footer">Made by Said - سعيد كيبورد © 2026</p>
-
-<script>
-// ===== نظام التفعيل =====
-const CODES = ["SAID-100","SAID-101","SAID-102","SAID-103","SAID-104","SAID-105","SAID-106","SAID-107","SAID-108","SAID-109","SAID-110","SAID-111","SAID-112","SAID-113","SAID-114","SAID-115","SAID-116","SAID-117","SAID-118","SAID-119","SAID-120","SAID-121","SAID-122","SAID-123","SAID-124","SAID-125","SAID-126","SAID-127","SAID-128","SAID-129","SAID-130","SAID-131","SAID-132","SAID-133","SAID-134","SAID-135","SAID-136","SAID-137","SAID-138","SAID-139","SAID-140","SAID-141","SAID-142","SAID-143","SAID-144","SAID-145","SAID-146","SAID-147","SAID-148","SAID-149"];
-
-function checkCode(){
-  let val = document.getElementById('codeInput').value.trim().toUpperCase();
-  if(CODES.includes(val)){
-    localStorage.setItem('said_unlocked','yes');
-    localStorage.setItem('said_code',val);
-    document.getElementById('lockScreen').style.display='none';
-    alert('اتفتح ✅ أهلاً بيك يا بطل');
-  } else {
-    document.getElementById('codeMsg').textContent='الكود غلط، كلم سعيد على واتساب 01098920188';
-  }
-}
-if(localStorage.getItem('said_unlocked')==='yes'){
-  window.addEventListener('load',()=>{ document.getElementById('lockScreen').style.display='none'; });
-}
-
-// ===== الكيبورد الأصلي =====
-const editor = document.getElementById('editor');
-const preview = document.getElementById('preview');
-const kbArea = document.getElementById('kbArea');
-const tabs = document.querySelectorAll('.kb-tab');
-
-const KEYBOARDS = {
-  learn: ["<h1>","</h1>","<p>","</p>","<div>","</div>","<button>","</button>","<br>","<b>","</b>","<h2>","</h2>"],
-  arabic: ["ض","ص","ث","ق","ف","غ","ع","ه","خ","ح","ج","د","ش","س","ي","ب","ل","ا","ت","ن","م","ك","ط","ئ","ء","ؤ","ر","لا","ى","ة","و","ز","ظ","1","2","3","4","5","6","7","8","9","0","؟","،"],
-  html: ["<html>","<head>","<body>","<div>","<p>","<h1>","<a>","<img>","<button>","<span>","class=","id=","</div>","</p>"],
-  css: ["color:","background:","font-size:","padding:","margin:","border:","{","}",";","#",".","px","%"],
-  js: ["let ","const ","function ","alert(","console.log(","document.","getElementById","=>","{","}","(",")",";","="]
-};
-
-function insertText(txt){
-  let s = editor.selectionStart;
-  let e = editor.selectionEnd;
-  editor.value = editor.value.slice(0,s) + txt + editor.value.slice(e);
-  editor.selectionStart = editor.selectionEnd = s + txt.length;
-  editor.focus();
-}
-function renderKb(tab){
-  kbArea.innerHTML = '';
-  KEYBOARDS[tab].forEach(k=>{
-    let b = document.createElement('button');
-    b.className = 'kb-btn';
-    b.textContent = k;
-    b.onclick = ()=> insertText(k);
-    kbArea.appendChild(b);
-  });
-  tabs.forEach(t=> t.classList.toggle('active', t.dataset.tab===tab));
-}
-tabs.forEach(t=> t.onclick = ()=> renderKb(t.dataset.tab));
-renderKb('learn');
-
-document.getElementById('runBtn').onclick = ()=>{ preview.innerHTML = editor.value; };
-document.getElementById('clearBtn').onclick = ()=>{ editor.value=''; preview.innerHTML=''; editor.focus(); };
-document.getElementById('copyBtn').onclick = ()=>{ navigator.clipboard.writeText(editor.value); alert('اتنسخ ✅'); };
-document.getElementById('pasteBtn').onclick = async ()=>{
-  try{ let txt = await navigator.clipboard.readText(); insertText(txt); }catch{ alert('اسمح للمتصفح باللصق'); }
-};
-document.querySelectorAll('.kb-bottom .kb-btn[data-key]').forEach(b=>{ b.onclick = ()=> insertText(b.dataset.key); });
-document.getElementById('backBtn').onclick = ()=>{
-  let s = editor.selectionStart;
-  if(s>0){ editor.value = editor.value.slice(0,s-1) + editor.value.slice(editor.selectionEnd); editor.selectionStart = editor.selectionEnd = s-1; }
-  editor.focus();
-};
-</script>
-</body>
-</html>
+  <button id
